@@ -4,8 +4,10 @@
 #include <iostream>
 #include <unordered_map>
 #include <map>
+#include <vector>
 #include <string>
-
+#include <fstream>
+#include <chrono>
 namespace command
 {
 
@@ -15,7 +17,7 @@ enum class e_CammandsTipe : int
     defaultCom,     //!< Дефолтная команда 
     newBlockStart,  //!< начало нового блока
     newBlockFinish, //!< конец блока
-    breakBlock,     //!< принудительное прерывание блока
+    breakBlock,     //!< прекращение ввода данных любого типа
 };
 
 
@@ -27,17 +29,19 @@ class cmd
 {
 public:
     cmd(int numberCommands);
-    ~cmd() = default; 
+    ~cmd(); 
     cmd(const cmd &other) = delete ;
     cmd(cmd &&other) = delete;
     cmd &operator=(const cmd &other) = delete;
     cmd &operator=(cmd &&other) = delete;
 
 private:
+    std::ofstream file;
     unsigned  counterCommands = 0;
 
     void start();
-    void startDynamicBock( std::string command);
+    void openfile();
+    std::vector<std::string> startDynamicBock( std::string command);
 };
 }
 #endif  // __CMD_H_PIQDZK0VGO84__
